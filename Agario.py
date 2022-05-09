@@ -5,6 +5,9 @@ from creep import Creep
 from avatar import Avatar
 from pygame.math import Vector2
 
+from ennemi import Ennemi
+
+
 def setup():
     print("Setup START----------")
 
@@ -13,9 +16,17 @@ def setup():
     core.memory("c",Creep())
     core.memory("a",Avatar())
     core.memory("listCreep",[])
-    core.memory("nbrCreep",100)
+    core.memory("nbrCreep",300)
+    core.memory("e",Ennemi())
+    core.memory("Ennemi",[])
+    core.memory("nbrEnnemi",10)
 
 
+
+
+
+    for i in range (0,core.memory("nbrEnnemi")):
+        core.memory("Ennemi").append(Ennemi())
 
 
     for i in range(0,core.memory("nbrCreep")):
@@ -40,14 +51,26 @@ def edge():
 
 def run ():
     core.cleanScreen()
-    print(core.memory("a").position)
+    #print(core.memory("a").position)
 
     for moncreep in core.memory("listCreep"):
         moncreep.show(core.screen)
 
+    #for monennemi in core.memory("Ennemi"):
+        #monennemi.show(core.screen)
+
     core.memory("a").moov(core.getMouseLeftClick())
     edge()
     core.memory("a").show()
+
+    core.memory("a").manger(core.memory("listCreep"))
+    # core.memory("a").kill(core.memory("Ennemi"))
+
+    for p in core.memory("Ennemi"):
+        p.afficher()
+
+
+
 
 
 core.main(setup, run)

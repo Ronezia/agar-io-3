@@ -5,10 +5,15 @@ from pygame.math import Vector2
 
 class Creep:
     def __init__(self):
-        self.position = Vector2(random.randint(0,1400),random.randint(0,850))
+        self.position = Vector2(random.randint(0,1295),random.randint(0,995))
         self.rayon = 5
         self.couleur = (random.randint(0,255), random.randint(0,255), random.randint(0,255))
         self.masse = 10
+
+    def ghost (self):
+        pass
+
+
 
 
 

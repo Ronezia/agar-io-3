@@ -6,13 +6,14 @@ from pygame.math import Vector2
 from creep import Creep
 
 import core
+from ennemi import Ennemi
 
 
 class Avatar:
     def __init__(self):
         self.position = Vector2(600,400)
         self.rayon = 20
-        self.nouriture = 1
+        self.nourriture = 1
         self.couleur = (random.randint(0,255), random.randint(0,255), random.randint(0,255))
         self.masse = 100
         self.vitesse = Vector2(0, 0)
@@ -24,6 +25,8 @@ class Avatar:
         self.vitessmax = 4
         self.taillemax = 300
         core.memory("c",Creep())
+
+
 
     def moov(self , destination):
         if destination is not None:
@@ -40,8 +43,6 @@ class Avatar:
         #attention max force
         if self.acceleration.length() > self.maxacc:
             self.acceleration.scale_to_length(self.maxacc)
-
-
 
         #ajout de F a la vitess
         self.vitesse = self.vitesse + self.acceleration
@@ -60,11 +61,34 @@ class Avatar:
         self.acceleration = Vector2(0,0)
 
     def manger(self,creep):
-        for creep in creep:
-            if p.pos.distance_to(self.pos) < 10:
-                p.freeze = True
+        for idx, p in enumerate(creep):
+            if p.position.distance_to(self.position) < self.rayon:
+                creepTmp=p
+                core.memory("listCreep").pop(idx)
+                self.nourriture += 1
+                self.takeWeight(creepTmp)
+                print(self.nourriture,self.masse)
+                core.memory("listCreep").append(Creep())
 
-
+    def takeWeight (self,creep):
+        self.masse += creep.masse
+        self.rayon += 0.01
     def show(self):
         core.Draw.circle(self.couleur,self.position,self.rayon)
         core.Draw.line((1,43,92),self.position,self.position+self.vitesse*100,1)
+'''
+# creation du kill sur ennemi
+    def kill (self,ennemi):
+        #self.rayon >= ennemi.rayon
+        for idx, p in enumerate(ennemi):
+            if p.position.distance_to(self.position) < self.rayon:
+                ennemiTmp=p
+                core.memory("Ennemi").pop(idx)
+                self.gros(ennemiTmp)
+                core.memory("Ennemi").append(Ennemi())
+'''
+'''
+   def gros (self,ennemi):
+        self.masse += ennemi.masse
+        self.rayon += 0.02
+'''

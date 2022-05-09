@@ -9,7 +9,7 @@ import pygame
 import core
 
 title = "Fenetre"
-bgColor = (255, 255, 255)
+bgColor = (0, 0, 0)
 screenCleen = True
 runfuntion = None
 setupfunction = None
@@ -273,6 +273,5 @@ class Draw:
             core.screen.blit(shape_surf, target_rect)
         else:
             pygame.draw.polygon(core.screen, color, points, width)
-
 
 
